@@ -36,3 +36,7 @@ Podfile.lock
 .DS_Store
 .AppleDouble
 .LSOverride
+-e 
+# Environment files
+*.env
+*.env.*
