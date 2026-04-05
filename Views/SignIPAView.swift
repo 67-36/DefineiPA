@@ -383,7 +383,7 @@ private struct SigningOptionsCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Button(action: { withAnimation(.spring(duration: 0.3)) { vm.showOptions.toggle() } }) {
+            Button(action: { withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) { vm.showOptions.toggle() } }) {
                 HStack {
                     Label("Signing Options", systemImage: "slider.horizontal.3")
                         .font(.headline).foregroundColor(.white)
