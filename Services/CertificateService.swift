@@ -298,11 +298,14 @@ private func parseNameDetail(_ i: inout Int, _ bytes: [UInt8])
         let vlen = derLen(&i, bytes)
         guard i + vlen <= bytes.count else { break }
         var val = ""
-        if vtag == 0x1E { // BMPString (2-byte chars)
-            for k in stride(from: i, to: i + vlen - 1, by: 2) {
-                let codepoint = UInt16(bytes[k]) << 8 | UInt16(bytes[k+1])
-                val += String(UnicodeScalar(codepoint) ?? UnicodeScalar(0x3F))
+        if vtag == 0x1E { // BMPString: pairs of bytes forming UTF-16BE code units
+            var utf16: [UInt16] = []
+            var k = i
+            while k + 1 < i + vlen && k + 1 < bytes.count {
+                utf16.append(UInt16(bytes[k]) << 8 | UInt16(bytes[k + 1]))
+                k += 2
             }
+            val = String(decoding: utf16, as: UTF16.self)
         } else {
             val = String(bytes: bytes[i..<i + vlen], encoding: .utf8)
                 ?? String(bytes: bytes[i..<i + vlen], encoding: .isoLatin1)
