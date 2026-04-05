@@ -52,23 +52,20 @@ extension Color {
 }
 
 extension View {
-    @ViewBuilder
+    // Liquid Glass effect:
+    // On iOS 26+ with Xcode 17+ SDK, replace the body with:
+    //   self.glassBackgroundEffect(in: RoundedRectangle(cornerRadius: cornerRadius))
+    // Until then, ultraThinMaterial on a dark background gives the same frosted-glass look.
     func glassCard(cornerRadius: CGFloat = 16) -> some View {
-        if #available(iOS 26.0, *) {
-            self
-                .glassBackgroundEffect(in: RoundedRectangle(cornerRadius: cornerRadius))
-        } else {
-            self
-                .background(
+        self.background(
+            RoundedRectangle(cornerRadius: cornerRadius)
+                .fill(.ultraThinMaterial)
+                .overlay(
                     RoundedRectangle(cornerRadius: cornerRadius)
-                        .fill(.ultraThinMaterial)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: cornerRadius)
-                                .strokeBorder(Color.white.opacity(0.08), lineWidth: 0.5)
-                        )
-                        .shadow(color: .black.opacity(0.4), radius: 12, x: 0, y: 4)
+                        .strokeBorder(Color.white.opacity(0.08), lineWidth: 0.5)
                 )
-        }
+                .shadow(color: .black.opacity(0.4), radius: 12, x: 0, y: 4)
+        )
     }
 
     func cardPadding() -> some View {

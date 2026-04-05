@@ -40,3 +40,4 @@ Podfile.lock
 # Environment files
 *.env
 *.env.*
+ios_repo/
