@@ -1,6 +1,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 import UIKit
+import CryptoKit
 
 @MainActor
 class SignIPAViewModel: ObservableObject {
@@ -163,8 +164,7 @@ class SignIPAViewModel: ObservableObject {
 
     private func computeSHA256(url: URL) -> String? {
         guard let data = try? Data(contentsOf: url) else { return nil }
-        import CryptoKit
-        let hash = CryptoKit.SHA256.hash(data: data)
+        let hash = SHA256.hash(data: data)
         return hash.compactMap { String(format: "%02x", $0) }.joined()
     }
 }

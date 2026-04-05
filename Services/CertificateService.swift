@@ -1,6 +1,7 @@
 import Foundation
 import Security
 import CryptoKit
+import CommonCrypto
 
 class CertificateService {
 
@@ -236,6 +237,3 @@ class CertificateService {
         return hash.map { String(format: "%02X", $0) }.joined(separator: ":")
     }
 }
-
-// CommonCrypto bridge for SHA1
-import CommonCrypto
