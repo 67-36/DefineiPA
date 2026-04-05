@@ -1,0 +1,427 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AA0000300000000000000000 /* SignToolApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000210000000000000000 /* SignToolApp.swift */; };
+		AA0000310000000000000000 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000220000000000000000 /* ContentView.swift */; };
+		AA0000320000000000000000 /* SignIPAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000230000000000000000 /* SignIPAView.swift */; };
+		AA0000330000000000000000 /* CheckCertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000240000000000000000 /* CheckCertView.swift */; };
+		AA0000340000000000000000 /* ChangePassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000250000000000000000 /* ChangePassView.swift */; };
+		AA0000350000000000000000 /* CertificateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000260000000000000000 /* CertificateInfo.swift */; };
+		AA0000360000000000000000 /* IPAInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000270000000000000000 /* IPAInfo.swift */; };
+		AA0000370000000000000000 /* SigningJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000280000000000000000 /* SigningJob.swift */; };
+		AA0000380000000000000000 /* ZsignWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000290000000000000000 /* ZsignWrapper.swift */; };
+		AA0000390000000000000000 /* CertificateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00002A0000000000000000 /* CertificateService.swift */; };
+		AA00003A0000000000000000 /* IPAParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00002B0000000000000000 /* IPAParser.swift */; };
+		AA00003B0000000000000000 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00002C0000000000000000 /* KeychainService.swift */; };
+		AA00003C0000000000000000 /* P12PasswordChanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00002D0000000000000000 /* P12PasswordChanger.swift */; };
+		AA00003D0000000000000000 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA00002F0000000000000000 /* Assets.xcassets */; };
+		AA00003E0000000000000000 /* ZsignSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AA0000410000000000000000 /* ZsignSwift */; };
+		AA00003F0000000000000000 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = AA0000430000000000000000 /* ZIPFoundation */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AA0000200000000000000000 /* SignTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SignTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA0000210000000000000000 /* SignToolApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignToolApp.swift; sourceTree = SOURCE_ROOT; };
+		AA0000220000000000000000 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = SOURCE_ROOT; };
+		AA0000230000000000000000 /* SignIPAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIPAView.swift; sourceTree = "<group>"; };
+		AA0000240000000000000000 /* CheckCertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckCertView.swift; sourceTree = "<group>"; };
+		AA0000250000000000000000 /* ChangePassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePassView.swift; sourceTree = "<group>"; };
+		AA0000260000000000000000 /* CertificateInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateInfo.swift; sourceTree = "<group>"; };
+		AA0000270000000000000000 /* IPAInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAInfo.swift; sourceTree = "<group>"; };
+		AA0000280000000000000000 /* SigningJob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigningJob.swift; sourceTree = "<group>"; };
+		AA0000290000000000000000 /* ZsignWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZsignWrapper.swift; sourceTree = "<group>"; };
+		AA00002A0000000000000000 /* CertificateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateService.swift; sourceTree = "<group>"; };
+		AA00002B0000000000000000 /* IPAParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAParser.swift; sourceTree = "<group>"; };
+		AA00002C0000000000000000 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		AA00002D0000000000000000 /* P12PasswordChanger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P12PasswordChanger.swift; sourceTree = "<group>"; };
+		AA00002E0000000000000000 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		AA00002F0000000000000000 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AA00000B0000000000000000 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA00003E0000000000000000 /* ZsignSwift in Frameworks */,
+				AA00003F0000000000000000 /* ZIPFoundation in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AA0000020000000000000000 = {
+			isa = PBXGroup;
+			children = (
+				AA0000210000000000000000 /* SignToolApp.swift */,
+				AA0000220000000000000000 /* ContentView.swift */,
+				AA00002E0000000000000000 /* Info.plist */,
+				AA0000040000000000000000 /* Views */,
+				AA0000050000000000000000 /* Models */,
+				AA0000060000000000000000 /* Services */,
+				AA0000070000000000000000 /* Resources */,
+				AA0000030000000000000000 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AA0000030000000000000000 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000200000000000000000 /* SignTool.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AA0000040000000000000000 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000230000000000000000 /* SignIPAView.swift */,
+				AA0000240000000000000000 /* CheckCertView.swift */,
+				AA0000250000000000000000 /* ChangePassView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		AA0000050000000000000000 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000260000000000000000 /* CertificateInfo.swift */,
+				AA0000270000000000000000 /* IPAInfo.swift */,
+				AA0000280000000000000000 /* SigningJob.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		AA0000060000000000000000 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000290000000000000000 /* ZsignWrapper.swift */,
+				AA00002A0000000000000000 /* CertificateService.swift */,
+				AA00002B0000000000000000 /* IPAParser.swift */,
+				AA00002C0000000000000000 /* KeychainService.swift */,
+				AA00002D0000000000000000 /* P12PasswordChanger.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		AA0000070000000000000000 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AA00002F0000000000000000 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AA0000080000000000000000 /* SignTool */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA00000C0000000000000000 /* Build configuration list for PBXNativeTarget "SignTool" */;
+			buildPhases = (
+				AA0000090000000000000000 /* Sources */,
+				AA00000B0000000000000000 /* Frameworks */,
+				AA00000A0000000000000000 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SignTool;
+			packageProductDependencies = (
+				AA0000410000000000000000 /* ZsignSwift */,
+				AA0000430000000000000000 /* ZIPFoundation */,
+			);
+			productName = SignTool;
+			productReference = AA0000200000000000000000 /* SignTool.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AA0000010000000000000000 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					AA0000080000000000000000 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+				};
+			};
+			buildConfigurationList = AA00000D0000000000000000 /* Build configuration list for PBXProject "SignTool" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AA0000020000000000000000;
+			packageReferences = (
+				AA0000400000000000000000 /* XCRemoteSwiftPackageReference "Zsign-Package" */,
+				AA0000420000000000000000 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+			);
+			productRefGroup = AA0000030000000000000000 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AA0000080000000000000000 /* SignTool */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AA00000A0000000000000000 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA00003D0000000000000000 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AA0000090000000000000000 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA0000300000000000000000 /* SignToolApp.swift in Sources */,
+				AA0000310000000000000000 /* ContentView.swift in Sources */,
+				AA0000320000000000000000 /* SignIPAView.swift in Sources */,
+				AA0000330000000000000000 /* CheckCertView.swift in Sources */,
+				AA0000340000000000000000 /* ChangePassView.swift in Sources */,
+				AA0000350000000000000000 /* CertificateInfo.swift in Sources */,
+				AA0000360000000000000000 /* IPAInfo.swift in Sources */,
+				AA0000370000000000000000 /* SigningJob.swift in Sources */,
+				AA0000380000000000000000 /* ZsignWrapper.swift in Sources */,
+				AA0000390000000000000000 /* CertificateService.swift in Sources */,
+				AA00003A0000000000000000 /* IPAParser.swift in Sources */,
+				AA00003B0000000000000000 /* KeychainService.swift in Sources */,
+				AA00003C0000000000000000 /* P12PasswordChanger.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AA00000E0000000000000000 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AA00000F0000000000000000 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AA0000100000000000000000 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.astear17.signtool";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AA0000110000000000000000 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.astear17.signtool";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA00000C0000000000000000 /* Build configuration list for PBXNativeTarget "SignTool" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA0000100000000000000000 /* Debug */,
+				AA0000110000000000000000 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA00000D0000000000000000 /* Build configuration list for PBXProject "SignTool" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA00000E0000000000000000 /* Debug */,
+				AA00000F0000000000000000 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AA0000400000000000000000 /* XCRemoteSwiftPackageReference "Zsign-Package" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/khcrysalis/Zsign-Package";
+			requirement = {
+				branch = package;
+				kind = branch;
+			};
+		};
+		AA0000420000000000000000 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation";
+			requirement = {
+				minimumVersion = 0.9.0;
+				kind = upToNextMajorVersion;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA0000410000000000000000 /* ZsignSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA0000400000000000000000 /* XCRemoteSwiftPackageReference "Zsign-Package" */;
+			productName = ZsignSwift;
+		};
+		AA0000430000000000000000 /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA0000420000000000000000 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
+		};
+/* End XCSwiftPackageProductDependency section */
+
+	};
+	rootObject = AA0000010000000000000000 /* Project object */;
+}

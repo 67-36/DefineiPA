@@ -1,0 +1,72 @@
+name: Build Unsigned IPA
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      scheme:
+        description: "Xcode scheme"
+        required: false
+        default: "SignTool"
+
+jobs:
+  build:
+    runs-on: macos-14
+    env:
+      SCHEME: ${{ github.event.inputs.scheme || 'SignTool' }}
+      PROJECT: SignTool.xcodeproj
+      ARCHIVE_PATH: ${{ github.workspace }}/build/SignTool.xcarchive
+      IPA_DIR: ${{ github.workspace }}/build/ipa
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode 16.2
+        run: sudo xcode-select -s /Applications/Xcode_16.2.app
+
+      - name: Download App Icon
+        run: |
+          curl -L "https://raw.githubusercontent.com/Astear17/SignTool/main/Resources/icon.png" \
+            -o "Resources/Assets.xcassets/AppIcon.appiconset/icon.png"
+
+      - name: Resolve SPM dependencies
+        run: xcodebuild -resolvePackageDependencies -project "$PROJECT" -scheme "$SCHEME"
+
+      - name: Archive (no code signing)
+        run: |
+          xcodebuild archive \
+            -project "$PROJECT" \
+            -scheme "$SCHEME" \
+            -configuration Release \
+            -archivePath "$ARCHIVE_PATH" \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            ONLY_ACTIVE_ARCH=NO \
+            | xcpretty || true
+
+      - name: Package unsigned IPA
+        run: |
+          mkdir -p "$IPA_DIR/Payload"
+          APP=$(find "$ARCHIVE_PATH/Products" -name "*.app" | head -1)
+          cp -r "$APP" "$IPA_DIR/Payload/"
+          cd "$IPA_DIR"
+          zip -qr SignTool-unsigned.ipa Payload
+          shasum -a 256 SignTool-unsigned.ipa
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SignTool-unsigned-ipa
+          path: ${{ env.IPA_DIR }}/SignTool-unsigned.ipa
+          retention-days: 30
+
+      - name: Upload dSYMs
+        uses: actions/upload-artifact@v4
+        with:
+          name: SignTool-dSYMs
+          path: ${{ env.ARCHIVE_PATH }}/dSYMs
+          retention-days: 30
+          if-no-files-found: warn
