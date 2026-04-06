@@ -1,6 +1,5 @@
 import Foundation
 import ZsignSwift
-import ZIPFoundation
 
 // MARK: - Errors
 enum SignError: LocalizedError {
@@ -11,19 +10,18 @@ enum SignError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .noAppBundle: return "No .app bundle found inside IPA Payload/"
-        case .signingFailed(let msg): return "Signing failed: \(msg ?? "unknown error")"
-        case .zipError(let e): return "ZIP error: \(e.localizedDescription)"
-        case .invalidIPA: return "Invalid IPA file"
+        case .noAppBundle:             return "No .app bundle found inside IPA Payload/"
+        case .signingFailed(let msg):  return "Signing failed: \(msg ?? "unknown error")"
+        case .zipError(let e):         return "ZIP error: \(e.localizedDescription)"
+        case .invalidIPA:              return "Invalid IPA file"
         }
     }
 }
 
 class ZsignWrapper {
 
-    // MARK: - Sign IPA
-    /// Signs an IPA file on-device using Zsign.
-    /// - Returns: URL of the signed output IPA
+    // MARK: - Sign IPA on-device
+
     @MainActor
     static func sign(
         ipaURL: URL,
@@ -38,86 +36,83 @@ class ZsignWrapper {
         removePlugins: Bool = false,
         progressCallback: @escaping (String) -> Void
     ) async throws -> URL {
-        progressCallback("Preparing temp directory...")
+
+        progressCallback("Preparing temp directory…")
         let fm = FileManager.default
-        let tempDir = fm.temporaryDirectory.appendingPathComponent("zsign_\(UUID().uuidString)")
+        let tempDir = fm.temporaryDirectory
+            .appendingPathComponent("zsign_\(UUID().uuidString)")
         try fm.createDirectory(at: tempDir, withIntermediateDirectories: true)
 
-        defer {
-            try? fm.removeItem(at: tempDir)
-        }
+        defer { try? fm.removeItem(at: tempDir) }
 
-        progressCallback("Extracting IPA...")
+        // 1. Extract IPA
+        progressCallback("Extracting IPA…")
         do {
-            try fm.unzipItem(at: ipaURL, to: tempDir)
+            try ZIPHelper.unzip(at: ipaURL, to: tempDir)
         } catch {
             throw SignError.zipError(error)
         }
 
         let payloadDir = tempDir.appendingPathComponent("Payload")
-        let contents = try fm.contentsOfDirectory(at: payloadDir, includingPropertiesForKeys: nil)
+        let contents   = try fm.contentsOfDirectory(
+            at: payloadDir, includingPropertiesForKeys: nil)
         guard let appBundle = contents.first(where: { $0.pathExtension == "app" }) else {
             throw SignError.noAppBundle
         }
+        progressCallback("Found: \(appBundle.lastPathComponent)")
 
-        progressCallback("Found app bundle: \(appBundle.lastPathComponent)")
-
-        // Inject dylibs
+        // 2. Inject dylibs
         for dylib in injectDylibs {
-            let frameworksDir = appBundle.appendingPathComponent("Frameworks")
-            try? fm.createDirectory(at: frameworksDir, withIntermediateDirectories: true)
-            let dest = frameworksDir.appendingPathComponent(dylib.lastPathComponent)
+            let fwDir = appBundle.appendingPathComponent("Frameworks")
+            try? fm.createDirectory(at: fwDir, withIntermediateDirectories: true)
+            let dest = fwDir.appendingPathComponent(dylib.lastPathComponent)
             try? fm.copyItem(at: dylib, to: dest)
-            progressCallback("Injected dylib: \(dylib.lastPathComponent)")
+            progressCallback("Injected: \(dylib.lastPathComponent)")
         }
 
-        // Remove plugins
+        // 3. Remove plugins if requested
         if removePlugins {
-            let pluginsDir = appBundle.appendingPathComponent("PlugIns")
-            try? fm.removeItem(at: pluginsDir)
+            try? fm.removeItem(at: appBundle.appendingPathComponent("PlugIns"))
             progressCallback("Removed PlugIns")
         }
 
-        progressCallback("Signing with Zsign...")
-        let success = await withCheckedContinuation { continuation in
+        // 4. Sign with Zsign
+        progressCallback("Signing…")
+        let success = await withCheckedContinuation { cont in
             Zsign.sign(
-                appPath: appBundle.path,
-                provisionPath: provisionURL.path,
-                p12Path: p12URL.path,
-                p12Password: p12Password,
+                appPath:          appBundle.path,
+                provisionPath:    provisionURL.path,
+                p12Path:          p12URL.path,
+                p12Password:      p12Password,
                 entitlementsPath: "",
-                customIdentifier: bundleID ?? "",
-                customName: displayName ?? "",
-                customVersion: version ?? "",
-                adhoc: false,
-                removeProvision: false
+                customIdentifier: bundleID    ?? "",
+                customName:       displayName ?? "",
+                customVersion:    version     ?? "",
+                adhoc:            false,
+                removeProvision:  false
             ) { ok, error in
-                if let err = error {
-                    progressCallback("Warning: \(err.localizedDescription)")
-                }
-                continuation.resume(returning: ok)
+                if let err = error { progressCallback("Warning: \(err.localizedDescription)") }
+                cont.resume(returning: ok)
             }
         }
 
-        if !success {
-            throw SignError.signingFailed(nil)
-        }
+        guard success else { throw SignError.signingFailed(nil) }
 
-        progressCallback("Signing complete. Packaging IPA...")
-
-        // Package back into IPA
+        // 5. Re-package as IPA
+        progressCallback("Packaging IPA…")
         try? fm.removeItem(at: outputURL)
         do {
-            try fm.zipItem(at: payloadDir, to: outputURL, shouldKeepParent: true)
+            try ZIPHelper.zip(directory: payloadDir, to: outputURL, keepParent: true)
         } catch {
             throw SignError.zipError(error)
         }
 
-        progressCallback("Done! Output: \(outputURL.lastPathComponent)")
+        progressCallback("Done: \(outputURL.lastPathComponent)")
         return outputURL
     }
 
-    // MARK: - Check revocation via Zsign
+    // MARK: - OCSP check via Zsign
+
     static func checkRevokage(
         provisionURL: URL,
         p12URL: URL,
@@ -126,8 +121,8 @@ class ZsignWrapper {
     ) {
         Zsign.checkRevokage(
             provisionPath: provisionURL.path,
-            p12Path: p12URL.path,
-            p12Password: p12Password
+            p12Path:       p12URL.path,
+            p12Password:   p12Password
         ) { status, expirationDate, error in
             completion(status, expirationDate, error)
         }
