@@ -2,7 +2,7 @@ name: Build Unsigned IPA
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   workflow_dispatch:
     inputs:
       scheme:
@@ -10,9 +10,13 @@ on:
         required: false
         default: "SignTool"
 
+permissions:
+  contents: read
+
 jobs:
   build:
-    runs-on: macos-26
+    runs-on: macos-latest
+
     env:
       SCHEME: ${{ github.event.inputs.scheme || 'SignTool' }}
       PROJECT: SignTool.xcodeproj
@@ -23,20 +27,36 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Select Xcode 16.2
-        run: sudo xcode-select -s /Applications/Xcode_16.2.app
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      # Cache Swift Package Manager
+      - name: Cache SPM
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.swiftpm
+            ~/Library/Developer/Xcode/DerivedData
+          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-
 
       - name: Download App Icon
         run: |
+          mkdir -p Resources/Assets.xcassets/AppIcon.appiconset
           curl -L "https://raw.githubusercontent.com/Astear17/SignTool/main/Resources/icon.png" \
             -o "Resources/Assets.xcassets/AppIcon.appiconset/icon.png"
 
-      - name: Resolve SPM dependencies
-        run: xcodebuild -resolvePackageDependencies -project "$PROJECT" -scheme "$SCHEME"
+      - name: Resolve dependencies
+        run: |
+          xcodebuild -resolvePackageDependencies \
+            -project "$PROJECT" \
+            -scheme "$SCHEME"
 
-      - name: Archive (no code signing)
+      - name: Build archive (unsigned)
         run: |
           set -o pipefail
+
           xcodebuild archive \
             -project "$PROJECT" \
             -scheme "$SCHEME" \
@@ -47,26 +67,40 @@ jobs:
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO \
             ONLY_ACTIVE_ARCH=NO \
-            2>&1 | tee /tmp/build.log | xcpretty ; \
-          EXIT=${PIPESTATUS[0]} ; \
-          if [ "$EXIT" -ne 0 ]; then \
-            echo "=== BUILD ERRORS ===" ; \
-            grep -E " error:|warning:| note:" /tmp/build.log | head -80 || true ; \
-            echo "=== LAST 100 LINES ===" ; \
-            tail -100 /tmp/build.log ; \
-            exit "$EXIT" ; \
+            | tee build.log
+
+          EXIT=${PIPESTATUS[0]}
+          if [ "$EXIT" -ne 0 ]; then
+            echo "=== BUILD FAILED ==="
+            tail -100 build.log
+            exit $EXIT
           fi
 
-      - name: Package unsigned IPA
+      - name: Verify archive
+        run: |
+          if [ ! -d "$ARCHIVE_PATH" ]; then
+            echo "Archive not found!"
+            exit 1
+          fi
+
+      - name: Package IPA
         run: |
           mkdir -p "$IPA_DIR/Payload"
-          APP=$(find "$ARCHIVE_PATH/Products" -name "*.app" | head -1)
+
+          APP=$(find "$ARCHIVE_PATH/Products/Applications" -name "*.app" | head -1)
+
+          if [ -z "$APP" ]; then
+            echo "No .app found in archive!"
+            exit 1
+          fi
+
           cp -r "$APP" "$IPA_DIR/Payload/"
           cd "$IPA_DIR"
+
           zip -qr SignTool-unsigned.ipa Payload
           shasum -a 256 SignTool-unsigned.ipa
 
-      - name: Upload IPA artifact
+      - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
           name: SignTool-unsigned-ipa
