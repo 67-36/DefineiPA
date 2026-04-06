@@ -10,12 +10,9 @@ on:
         required: false
         default: "SignTool"
 
-permissions:
-  contents: read
-
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-26
 
     env:
       SCHEME: ${{ github.event.inputs.scheme || 'SignTool' }}
@@ -27,10 +24,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Do NOT hard fail on Xcode path
+      - name: Select Xcode (fallback safe)
+        run: |
+          if [ -d "/Applications/Xcode_16.2.app" ]; then
+            sudo xcode-select -s /Applications/Xcode_16.2.app
+          else
+            echo "Xcode 16.2 not found, using default"
+          fi
+
       - name: Show Xcode version
         run: xcodebuild -version
 
-      # Cache Swift Package Manager
       - name: Cache SPM
         uses: actions/cache@v4
         with:
@@ -90,7 +95,7 @@ jobs:
           APP=$(find "$ARCHIVE_PATH/Products/Applications" -name "*.app" | head -1)
 
           if [ -z "$APP" ]; then
-            echo "No .app found in archive!"
+            echo "No .app found!"
             exit 1
           fi
 
