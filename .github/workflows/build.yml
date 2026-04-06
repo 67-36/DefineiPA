@@ -47,11 +47,14 @@ jobs:
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO \
             ONLY_ACTIVE_ARCH=NO \
-            2>&1 | tee /tmp/build.log | xcpretty
-          EXIT=${PIPESTATUS[0]}
-          if [ $EXIT -ne 0 ]; then
-            echo "=== FULL BUILD LOG ===" && cat /tmp/build.log | grep -E "error:|warning:|note:" | head -60
-            exit $EXIT
+            2>&1 | tee /tmp/build.log | xcpretty ; \
+          EXIT=${PIPESTATUS[0]} ; \
+          if [ "$EXIT" -ne 0 ]; then \
+            echo "=== BUILD ERRORS ===" ; \
+            grep -E " error:|warning:| note:" /tmp/build.log | head -80 || true ; \
+            echo "=== LAST 100 LINES ===" ; \
+            tail -100 /tmp/build.log ; \
+            exit "$EXIT" ; \
           fi
 
       - name: Package unsigned IPA
